@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
 
-import 'themes/app_theme.dart';
-import 'themes/app_colors.dart';
+import 'package:designmaster_flutter_ui/explore/explore_screen.dart';
+import 'package:designmaster_flutter_ui/favorites/favorites_screen.dart';
+import 'package:designmaster_flutter_ui/models/module_detail_screen.dart';
+import 'package:designmaster_flutter_ui/profile/profile_screen.dart';
+import 'package:designmaster_flutter_ui/screens/dashboard/dashbord_screen.dart';
+import 'package:designmaster_flutter_ui/screens/ecommerce/ecommerce_home_screen.dart';
+import 'package:designmaster_flutter_ui/providers/cart_provider.dart';
 
-import 'screens/dashboard/dashboard_screen.dart';
+import 'models/module_model.dart';
+import 'themes/app_theme.dart';
 import 'widgets/bottom_navigation.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Load saved Cart and Wishlist data before opening the app.
+  await CartProvider().initialize();
+
   runApp(const DesignMasterApp());
 }
 
@@ -17,11 +28,8 @@ class DesignMasterApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
-      title: 'Social Platform',
-
+      title: 'DesignMaster',
       theme: AppTheme.lightTheme,
-
       home: const MainNavigationScreen(),
     );
   }
@@ -31,95 +39,85 @@ class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
 
   @override
-  State<MainNavigationScreen> createState() =>
-      _MainNavigationScreenState();
+  State<MainNavigationScreen> createState() => _MainNavigationScreenState();
 }
 
-class _MainNavigationScreenState
-    extends State<MainNavigationScreen> {
-
+class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int selectedIndex = 0;
 
-  final List<Widget> screens = [
-    const DashboardScreen(),
+  final Set<String> favoriteIds = {};
 
-    const PlaceholderScreen(
-      title: 'Explore',
-      icon: Icons.explore_outlined,
-    ),
+  void toggleFavorite(ModuleModel module) {
+    setState(() {
+      if (favoriteIds.contains(module.id)) {
+        favoriteIds.remove(module.id);
+      } else {
+        favoriteIds.add(module.id);
+      }
+    });
+  }
 
-    const PlaceholderScreen(
-      title: 'Favorites',
-      icon: Icons.favorite_outline,
-    ),
+  void openModule(ModuleModel module) {
+    // Open E-Commerce module.
+    if (module.id == 'ecommerce') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const EcommerceHomeScreen()),
+      );
 
-    const PlaceholderScreen(
-      title: 'Profile',
-      icon: Icons.person_outline,
-    ),
-  ];
+      return;
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        index: selectedIndex,
-        children: screens,
-      ),
-
-      bottomNavigationBar: AppBottomNavigation(
-        currentIndex: selectedIndex,
-
-        onTap: (index) {
-          setState(() {
-            selectedIndex = index;
-          });
-        },
+    // Existing navigation for other modules.
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ModuleDetailScreen(
+          module: module,
+          isFavorite: favoriteIds.contains(module.id),
+          onFavoriteToggle: () => toggleFavorite(module),
+        ),
       ),
     );
   }
-}
 
-class PlaceholderScreen extends StatelessWidget {
-  final String title;
-  final IconData icon;
-
-  const PlaceholderScreen({
-    super.key,
-    required this.title,
-    required this.icon,
-  });
+  void changeTab(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final screens = [
+      DashboardScreen(
+        onModuleTap: openModule,
+        favoriteIds: favoriteIds,
+        onFavoriteToggle: toggleFavorite,
+        onExploreTap: () => changeTab(1),
+      ),
+
+      ExploreScreen(
+        onModuleTap: openModule,
+        favoriteIds: favoriteIds,
+        onFavoriteToggle: toggleFavorite,
+      ),
+
+      FavoritesScreen(
+        favoriteIds: favoriteIds,
+        onModuleTap: openModule,
+        onFavoriteToggle: toggleFavorite,
+      ),
+
+      const ProfileScreen(),
+    ];
+
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: 65,
-              color: AppColors.primary,
-            ),
+      body: IndexedStack(index: selectedIndex, children: screens),
 
-            const SizedBox(height: 15),
-
-            Text(
-              title,
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-
-            const SizedBox(height: 8),
-
-            const Text(
-              'Coming Soon',
-              style: TextStyle(
-                color: AppColors.textSecondary,
-              ),
-            ),
-          ],
-        ),
+      bottomNavigationBar: AppBottomNavigation(
+        currentIndex: selectedIndex,
+        onTap: changeTab,
       ),
     );
   }
