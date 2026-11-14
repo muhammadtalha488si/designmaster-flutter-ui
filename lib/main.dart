@@ -18,7 +18,7 @@ class DesignMasterApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
-      title: 'DesignMaster',
+      title: 'Social Platform',
 
       theme: AppTheme.lightTheme,
 

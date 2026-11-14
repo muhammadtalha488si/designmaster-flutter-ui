@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import '../../themes/app_colors.dart';
 
@@ -12,8 +13,7 @@ class DashboardScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            // Header
+            // HEADER
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -21,7 +21,7 @@ class DashboardScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Hello, Developer 👋',
+                      'Hi everyone 👋',
                       style: TextStyle(
                         fontSize: 15,
                         color: AppColors.textSecondary,
@@ -29,14 +29,12 @@ class DashboardScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'DesignMaster',
+                      'Social Platform',
                       style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium,
+                          .textTheme.headlineMedium,
                     ),
                   ],
                 ),
-
                 Container(
                   height: 48,
                   width: 48,
@@ -55,69 +53,89 @@ class DashboardScreen extends StatelessWidget {
 
             const SizedBox(height: 25),
 
-            // Welcome Card
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(22),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [
-                    AppColors.primary,
-                    Color(0xFF938CFF),
-                  ],
-                ),
-                borderRadius: BorderRadius.circular(22),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Learn. Practice. Build.',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+            // DASHBOARD BANNER IMAGE
+            ClipRRect(
+              borderRadius: BorderRadius.circular(22),
+              child: SizedBox(
+                height: 190,
+                width: double.infinity,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Image.asset(
+                      'assets/images/dashboard_banner.jpg',
+                      fit: BoxFit.cover,
                     ),
-                  ),
 
-                  const SizedBox(height: 10),
-
-                  const Text(
-                    'Explore Flutter UI concepts and '
-                    'build beautiful mobile applications.',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 14,
-                      height: 1.5,
-                    ),
-                  ),
-
-                  const SizedBox(height: 18),
-
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 18,
-                      vertical: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Text(
-                      'Start Learning',
-                      style: TextStyle(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.bold,
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColors.primary.withOpacity(0.95),
+                            AppColors.primary.withOpacity(0.55),
+                          ],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+
+                    Padding(
+                      padding: const EdgeInsets.all(22),
+                      child: Column(
+                        crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                        mainAxisAlignment:
+                            MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'This Is A social Platform',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'This is A Place Where You Can See Every Thing '
+                           ,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              height: 1.5,
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 18,
+                              vertical: 9,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.circular(12),
+                            ),
+                            child: const Text(
+                              'Start Learning',
+                              style: TextStyle(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
 
             const SizedBox(height: 28),
 
-            // Section Heading
+            // MODULE HEADING
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -125,7 +143,6 @@ class DashboardScreen extends StatelessWidget {
                   'Explore Modules',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-
                 const Text(
                   'View All',
                   style: TextStyle(
@@ -138,41 +155,37 @@ class DashboardScreen extends StatelessWidget {
 
             const SizedBox(height: 18),
 
-            // Module Grid
+            // MODULE GRID
             GridView.count(
               crossAxisCount: 2,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               crossAxisSpacing: 14,
               mainAxisSpacing: 14,
-              childAspectRatio: 1.05,
-
+              childAspectRatio: 0.85,
               children: const [
                 ModuleCard(
                   title: 'E-Commerce',
                   subtitle: 'Shopping UI',
-                  icon: Icons.shopping_bag_outlined,
+                  imagePath: 'assets/images/ecommerce.jpg',
                   color: AppColors.orange,
                 ),
-
                 ModuleCard(
                   title: 'Banking',
                   subtitle: 'Finance UI',
-                  icon: Icons.account_balance_wallet_outlined,
+                  imagePath: 'assets/images/banking.jpg',
                   color: AppColors.blue,
                 ),
-
                 ModuleCard(
                   title: 'Social Media',
                   subtitle: 'Social UI',
-                  icon: Icons.people_outline,
+                  imagePath: 'assets/images/social_media.jpg',
                   color: AppColors.pink,
                 ),
-
                 ModuleCard(
                   title: 'Booking',
                   subtitle: 'Travel UI',
-                  icon: Icons.calendar_month_outlined,
+                  imagePath: 'assets/images/booking.jpg',
                   color: AppColors.green,
                 ),
               ],
@@ -180,7 +193,7 @@ class DashboardScreen extends StatelessWidget {
 
             const SizedBox(height: 25),
 
-            // Learning Section
+            // LEARNING JOURNEY
             Text(
               'Your Learning Journey',
               style: Theme.of(context).textTheme.titleLarge,
@@ -193,9 +206,7 @@ class DashboardScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(
-                  color: AppColors.border,
-                ),
+                border: Border.all(color: AppColors.border),
               ),
               child: const Row(
                 children: [
@@ -204,12 +215,11 @@ class DashboardScreen extends StatelessWidget {
                     color: AppColors.primary,
                     size: 35,
                   ),
-
                   SizedBox(width: 14),
-
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Your Journey Starts Here',
@@ -218,9 +228,7 @@ class DashboardScreen extends StatelessWidget {
                             fontSize: 15,
                           ),
                         ),
-
                         SizedBox(height: 5),
-
                         Text(
                           'Build your Flutter skills step by step.',
                           style: TextStyle(
@@ -241,69 +249,78 @@ class DashboardScreen extends StatelessWidget {
   }
 }
 
-// Reusable Module Card
+// REUSABLE MODULE CARD WITH IMAGE
 
 class ModuleCard extends StatelessWidget {
   final String title;
   final String subtitle;
-  final IconData icon;
+  final String imagePath;
   final Color color;
 
   const ModuleCard({
     super.key,
     required this.title,
     required this.subtitle,
-    required this.icon,
+    required this.imagePath,
     required this.color,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(
-          color: AppColors.border,
-        ),
+        border: Border.all(color: AppColors.border),
       ),
+      clipBehavior: Clip.antiAlias,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            height: 45,
-            width: 45,
-            decoration: BoxDecoration(
-              color: color.withOpacity(0.12),
-              borderRadius: BorderRadius.circular(13),
-            ),
-            child: Icon(
-              icon,
-              color: color,
-              size: 25,
-            ),
-          ),
-
-          const Spacer(),
-
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
+          Expanded(
+            child: SizedBox(
+              width: double.infinity,
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: color.withOpacity(0.12),
+                    child: Icon(
+                      Icons.image_not_supported_outlined,
+                      color: color,
+                      size: 40,
+                    ),
+                  );
+                },
+              ),
             ),
           ),
 
-          const SizedBox(height: 5),
-
-          Text(
-            subtitle,
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.textSecondary,
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  subtitle,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
