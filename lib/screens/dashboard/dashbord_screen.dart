@@ -188,7 +188,7 @@ class DashboardScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          'Your Favorites is here',
+                          '',
                           style: TextStyle(
                             color: AppColors.textSecondary,
                             fontSize: 12,
