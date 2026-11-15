@@ -57,6 +57,9 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/images/products/
+    - assets/images/banking/
+    - assets/images/social_media/
+    - assets/images/booking/
 
 
   # The following line ensures that the Material Icons font is

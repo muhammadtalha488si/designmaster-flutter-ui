@@ -7,6 +7,9 @@ import 'package:designmaster_flutter_ui/profile/profile_screen.dart';
 import 'package:designmaster_flutter_ui/screens/dashboard/dashbord_screen.dart';
 import 'package:designmaster_flutter_ui/screens/ecommerce/ecommerce_home_screen.dart';
 import 'package:designmaster_flutter_ui/providers/cart_provider.dart';
+import 'package:designmaster_flutter_ui/screens/banking/banking_home_screen.dart';
+import 'package:designmaster_flutter_ui/screens/social/social_media_home_screen.dart';
+import 'package:designmaster_flutter_ui/screens/booking/booking_home_screen.dart';
 
 import 'models/module_model.dart';
 import 'themes/app_theme.dart';
@@ -58,6 +61,27 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 
   void openModule(ModuleModel module) {
+    // Open Banking module.
+    if (module.id == 'banking') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const BankingHomeScreen()),
+      );
+      return;
+    }
+
+    // Open Social Media module.
+    if (module.id == 'social') {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const SocialMediaHomeScreen()));
+      return;
+    }
+
+    // Open Booking module.
+    if (module.id == 'booking') {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const BookingHomeScreen()));
+      return;
+    }
+
     // Open E-Commerce module.
     if (module.id == 'ecommerce') {
       Navigator.push(
